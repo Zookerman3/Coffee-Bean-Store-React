@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import StoreControl from "./StoreControl";
+import StoreControl from "./CoffeeControl";
 
 function App() {
   return (
