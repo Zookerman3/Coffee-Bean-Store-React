@@ -19,6 +19,7 @@ Coffee.propTypes = {
     origin: PropTypes.string,
     roast: PropTypes.string,
     price: PropTypes.number,
+    id: PropTypes.string,
     whenCoffeeClicked: PropTypes.func
 };
 
