@@ -2,6 +2,7 @@ import React from 'react';
 import NewCoffeeForm from './NewCoffeeForm';
 import CoffeeList from './CoffeeList';
 import CoffeeDetail from './CoffeeDetail';
+import EditCoffeeForm from './EditCoffeeForm';
 
 class CoffeeControl extends React.Component {
 
@@ -10,22 +11,40 @@ class CoffeeControl extends React.Component {
         this.state = {
             formVisibleOnPage: false,
             mainCoffeeList: [],
-            selectedCoffee: null
+            selectedCoffee: null,
+            editing: false
         };
     }
 
     handleClick = () => {
         if (this.state.selectedCoffee != null) {
-          this.setState({
-            formVisibleOnPage: false,
-            selectedCoffee: null,
-          });
+            this.setState({
+                formVisibleOnPage: false,
+                selectedCoffee: null,
+                editing: false
+            });
         } else {
-          this.setState(prevState => ({
-            formVisibleOnPage: !prevState.formVisibleOnPage,
-          }));
+            this.setState(prevState => ({
+                formVisibleOnPage: !prevState.formVisibleOnPage,
+            }));
         }
-      };
+    };
+
+    handleEditClick = () => {
+        console.log("handleEditClick reached")
+
+    }
+
+    handleEditingCoffeeInList = (coffeeToEdit) => {
+        const EditedMainCoffeeList = this.state.mainCoffeeList
+            .filter(coffee => coffee.id !== this.state.selectedCoffee.id)
+            .concat(coffeeToEdit);
+        this.setState({
+            mainCoffeeList: EditedMainCoffeeList,
+            editing: false,
+            selectedCoffee: null
+        });
+    }
 
 
     handleAddingNewCoffeeToList = (newCoffee) => {
@@ -38,24 +57,29 @@ class CoffeeControl extends React.Component {
 
     handleChangingSelectedCoffee = (id) => {
         const selectedCoffee = this.state.mainCoffeeList.filter(coffee => coffee.id === id)[0];
-        this.setState({selectedCoffee: selectedCoffee});
-      }
+        this.setState({ selectedCoffee: selectedCoffee });
+    }
 
     render() {
         let currentlyVisibleState = null;
-        let addCoffeeButton = null;
         let buttonText = null;
-        if (this.state.selectedCoffee != null) {
-            currentlyVisibleState = <CoffeeDetail coffee = {this.state.selectedCoffee} />
+        if (this.state.editing) {
+            currentlyVisibleState = <EditCoffeeForm coffee={this.state.selectedCoffee} onEditTicket={this.handleEditingCoffeeInList}/>
+            buttonText = "Return to Coffee List";
+        }
+        else if (this.state.selectedCoffee != null) {
+            currentlyVisibleState = <CoffeeDetail
+                coffee={this.state.selectedCoffee}
+                onClickingEdit={this.handleEditClick} />
             buttonText = "Return to Coffee List";
         }
         else if (this.state.formVisibleOnPage) {
             currentlyVisibleState = <NewCoffeeForm onNewCoffeeCreation={this.handleAddingNewCoffeeToList} />
             buttonText = "Return to Coffee List";
         } else {
-            currentlyVisibleState = <CoffeeList coffeeList={this.state.mainCoffeeList} onCoffeeSelection={this.handleChangingSelectedCoffee}/>
+            currentlyVisibleState = <CoffeeList coffeeList={this.state.mainCoffeeList} onCoffeeSelection={this.handleChangingSelectedCoffee} />
             buttonText = "Add Coffee";
-            addCoffeeButton = <button onClick={this.handleClick}>{buttonText}</button>
+        
         }
         return (
             <React.Fragment>
