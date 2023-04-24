@@ -40,7 +40,7 @@ function NewCoffeeForm(props) {
 }
 
 NewCoffeeForm.propTypes = {
-    onNewTicketCreation: PropTypes.func
+    onNewCoffeCreation: PropTypes.func
 };
 
 export default NewCoffeeForm;
