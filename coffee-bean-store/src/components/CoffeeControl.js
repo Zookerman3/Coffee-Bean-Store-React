@@ -32,7 +32,7 @@ class StoreControl extends React.Component {
         let addCoffeeButton = null;
         let buttonText = null;
         if (this.state.formVisibleOnPage) {
-            currentlyVisibleState = <NewCoffeeForm />
+            currentlyVisibleState = <NewCoffeeForm onNewCoffeeCreation={this.handleAddingNewCoffeeToList} />
             buttonText = "Return to Coffee List";
         } else {
             currentlyVisibleState = <CoffeeList coffeeList={this.state.mainCoffeeList} />
