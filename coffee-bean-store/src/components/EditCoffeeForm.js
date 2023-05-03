@@ -5,21 +5,22 @@ import PropTypes from "prop-types";
 function EditCoffeeForm(props) {
     const { coffee } = props;
 
-    function handleEditTicketFormSubmission(event) {
+    function handleEditCoffeeFormSubmission(event) {
         event.preventDefault();
         props.onEditCoffee({
             name: event.target.name.value,
             origin: event.target.origin.value,
             roast: event.target.roast.value,
             price: parseInt(event.target.price.value),
+            amount: parseInt(event.target.amount.value),
             id: coffee.id
         })
     }
     return (
         <React.Fragment>
             <ReusableForm
-                formSubmissionHandler={handleEditTicketFormSubmission}
-                buttonText="Update Ticket" />
+                formSubmissionHandler={handleEditCoffeeFormSubmission}
+                buttonText="Update Coffee" />
         </React.Fragment>
     );
 }

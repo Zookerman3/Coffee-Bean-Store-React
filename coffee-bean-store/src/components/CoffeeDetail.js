@@ -10,7 +10,8 @@ function CoffeeDetail(props) {
             <h3>{coffee.origin}</h3>
             <h3>{coffee.roast}</h3>
             <h3>{coffee.price}</h3>
-            <button onClick={props.onClickingEdit}>Update Ticket</button>
+            <h3>{coffee.amount}</h3>
+            <button onClick={props.onClickingEdit}>Update Coffee</button>
             <hr />
         </React.Fragment>
     );

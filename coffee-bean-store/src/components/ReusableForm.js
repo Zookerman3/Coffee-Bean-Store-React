@@ -17,9 +17,16 @@ function ReusableForm(props) {
                     name='roast'
                     placeholder='Type of Roast' />
                 <input
-                    type='text'
+                    type='number'
                     name='price'
                     placeholder='Price in Dollars' />
+                {props.showAmount && (
+                    <input
+                        type='number'
+                        name='amount'
+                        placeholder="Amount"
+                     />
+                )}
                 <button type='submit'>Add New Coffee</button>
             </form>
         </React.Fragment>

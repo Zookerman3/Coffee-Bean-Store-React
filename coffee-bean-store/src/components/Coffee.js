@@ -2,14 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Coffee(props) {
+
+    const handleSellButtonClick = () => {
+        props.whenCoffeeSold(props.id);
+
+        // Check if amount is 0 and remove the button
+        if (props.amount === 0) {
+            const sellButton = document.getElementById(`coffee-${props.id}-sell-button`);
+            sellButton.remove();
+        }
+    };
+
     return (
         <React.Fragment>
-            <div onClick={() => props.whenCoffeeClicked(props.id)}>
-                <h3>{props.name} - {props.origin}</h3>
-                <p><em>{props.roast}</em></p>
-                <p><em>{props.price}</em></p>
-                <hr />
-            </div>
+            <h4><span onClick={() => props.whenCoffeeClicked(props.id)}>Name: {props.name}</span></h4>
+            <p><span>Origin: {props.origin}</span></p>
+            <p><span>price: ${props.price}</span></p>
+            <p><span>roast: {props.roast}</span></p>
+            {/* {props.amount <= 100 ? <p>Oh no we're out!</p> : null} */}
+            {props.amount > 0 && <button id={`coffee-${props.id}-sell-button`} onClick={handleSellButtonClick}>Sell coffee</button>}
         </React.Fragment>
     );
 }
@@ -17,10 +28,8 @@ function Coffee(props) {
 Coffee.propTypes = {
     name: PropTypes.string,
     origin: PropTypes.string,
-    roast: PropTypes.string,
     price: PropTypes.number,
-    id: PropTypes.string,
-    whenCoffeeClicked: PropTypes.func
+    roast: PropTypes.string
 };
 
 export default Coffee;

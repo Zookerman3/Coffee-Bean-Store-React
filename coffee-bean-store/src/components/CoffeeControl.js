@@ -32,18 +32,26 @@ class CoffeeControl extends React.Component {
 
     handleEditClick = () => {
         console.log("handleEditClick reached")
-
+        this.setState({ editing: true });
     }
 
     handleEditingCoffeeInList = (coffeeToEdit) => {
-        const EditedMainCoffeeList = this.state.mainCoffeeList
+        const editedMainCoffeeList = this.state.mainCoffeeList
             .filter(coffee => coffee.id !== this.state.selectedCoffee.id)
             .concat(coffeeToEdit);
         this.setState({
-            mainCoffeeList: EditedMainCoffeeList,
+            mainCoffeeList: editedMainCoffeeList,
             editing: false,
             selectedCoffee: null
         });
+    }
+
+    handleCoffeeSale = (id) => {
+        const updatedCoffeeList = this.state.mainCoffeeList.filter((obj) => obj.id !== id);
+        const coffeeSold = this.state.mainCoffeeList.filter(coffee => coffee.id === id)[0];
+        const soldIndex = this.state.mainCoffeeList.indexOf(coffeeSold);
+        coffeeSold.amount -= 1;
+        updatedCoffeeList.splice(soldIndex, 0, coffeeSold);
     }
 
 
@@ -64,7 +72,7 @@ class CoffeeControl extends React.Component {
         let currentlyVisibleState = null;
         let buttonText = null;
         if (this.state.editing) {
-            currentlyVisibleState = <EditCoffeeForm coffee={this.state.selectedCoffee} onEditTicket={this.handleEditingCoffeeInList}/>
+            currentlyVisibleState = <EditCoffeeForm coffee={this.state.selectedCoffee} onEditCoffee={this.handleEditingCoffeeInList} />
             buttonText = "Return to Coffee List";
         }
         else if (this.state.selectedCoffee != null) {
@@ -79,9 +87,11 @@ class CoffeeControl extends React.Component {
             />
             buttonText = "Return to Coffee List";
         } else {
-            currentlyVisibleState = <CoffeeList coffeeList={this.state.mainCoffeeList} onCoffeeSelection={this.handleChangingSelectedCoffee} />
+            currentlyVisibleState = <CoffeeList coffeeList={this.state.mainCoffeeList}
+                onCoffeeSelection={this.handleChangingSelectedCoffee}
+                onCoffeeSale={this.handleCoffeeSale} />
             buttonText = "Add Coffee";
-        
+
         }
         return (
             <React.Fragment>

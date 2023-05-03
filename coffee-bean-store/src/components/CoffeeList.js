@@ -7,14 +7,17 @@ function CoffeeList(props) {
     return (
         <React.Fragment>
             <hr />
-            {props.coffeeList.map((coffee) =>
+            {props.coffeeList.map((coffeeSack) =>
                 <Coffee
-                    whenCoffeeClicked = {props.onCoffeeSelection}
-                    name={coffee.name}
-                    origin={coffee.origin}
-                    roast={coffee.roast}
-                    price={coffee.price}
-                    id={coffee.id} />
+                whenCoffeeClicked={props.onCoffeeSelection}
+                name={coffeeSack.name}
+                origin={coffeeSack.origin}
+                price={coffeeSack.price}
+                roast={coffeeSack.roast}
+                amount={coffeeSack.amount}
+                id={coffeeSack.id}
+                whenCoffeeSold={props.onCoffeeSale}
+                />
             )}
         </React.Fragment>
     );
